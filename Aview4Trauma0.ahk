@@ -1,8 +1,9 @@
 ;AHK macro. Hot key settings for MIRL. ;ctrl=^, alt=!, shift=+
 ;레이블링. 가이드라인 없애고 풀스크린 만드는 핫키. 빈 마스크 레이어들을 "C-F, T-F, L-F" 이름으로 생성하는 핫키 등.
-zx = 0 	;글로벌 변수 초기화. (하지만 딱히 초기화할 필요가 없기도 함.)
-zy = 0
-zsSavePath = ""
+zx := 0 	;글로벌 변수 초기화. (하지만 딱히 초기화할 필요가 없기도 함.)
+zy := 0
+zsSavePath := ""
+zsMaskFolderName := "Mask_DataSet"
 
 #s::	;원래 윈도우 기능에서, 윈도우키와 s를 누르면 Search 관련 기능일 수 있으나, 본 핫키로 대채하게 됨.
  ;AHK의 매크로를 잠시 중단하고 AHK제어 메뉴를 띄움. 매크로 동작이 잘못되고 있거나 매크로를 수정하였을 때에 주로 Reload를 선택함. (즉, 윈키+s누른후R누르기)
@@ -22,8 +23,8 @@ zsSavePath = ""
   Sleep, 100			;0.1초 대기. 시스템이 느린 경우 약간의 딜레이가 필요함.
   Send, g			;View메뉴 안에서 GuideLine을 토글하는 키는 "g"만 눌러도 실행되므로 g키를 침.
   ;아래 행의 ControlGetPos 마지막 두개의 인자는 AView 화면 내에 title label이 Mask Control인 child창의 위치를 찾기 위함. 사지탈 작업용.
-  ;ControlGetPos, zx, zy, zw, zh, Mask Control, ahk_exe AView2010.exe		; 사지탈 작업용.
-  MouseMove, zx+300, zy+300, 5	;찾아진 위치에서 적정 픽셀을 이동하여 주작업 편집창에 마우스를 이동함.
+  ControlGetPos, zx, zy, zw, zh, Mask Control, ahk_exe AView2010.exe		; 사지탈 작업용.
+  MouseMove, zx-300, zy+300, 5	;찾아진 위치에서 적정 픽셀을 이동하여 주작업 편집창에 마우스를 이동함.
   Click, right			;마우스 오른쪽 버튼을 클릭하여 콘텍스트메뉴를 띄움.
   Send, {down}{right}{enter}	;콘텍스트 메뉴의 첫번째(down키) 메뉴를 옆으로(right) 펼쳐서 나온 첫번째 메뉴인 Full screen을 실행(enter)함.
   Sleep, 500			;0.1초 대기. 시스템이 느린 경우 약간의 딜레이가 필요함.
@@ -65,9 +66,27 @@ zsSavePath = ""
   Sleep, 300
   Send, 10000{tab}	;UpperBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
   Sleep, 300
-;  Send, C-F{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
+  Send, C-F{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
+;  Send, P{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
 ;  Send, Th{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
-  Send, P{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
+  Sleep, 500
+  
+  MouseClick,  left
+  Sleep, 500
+  Send, 10000{tab}	;키보드입력 포커스가 가 있는 LowerBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
+  Sleep, 300
+  Send, 10000{tab}	;UpperBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
+  Sleep, 300
+  Send, T-F{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
+  Sleep, 500
+  
+  MouseClick,  left
+  Sleep, 500
+  Send, 10000{tab}	;키보드입력 포커스가 가 있는 LowerBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
+  Sleep, 300
+  Send, 10000{tab}	;UpperBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
+  Sleep, 300
+  Send, L-F{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
   Sleep, 500
   
   ControlGetPos, zx, zy, zw, zh, Mask Control, ahk_exe AView2010.exe
@@ -75,13 +94,42 @@ zsSavePath = ""
   Return
 
 #0::	;Save to path 설정을 위한 핫키
-  InputBox, zsSavePath, Path setting, Enter save path
+ ;Save to current path 기능을 ahk로 구성해봄
+  ;InputBox, zsSavePath, Path setting, Enter save path
+  CoordMode, Mouse, Window 	;마우스 관련 동작의 기준점을 Aview 창 내부로 설정.
+  Send, {esc}			;다른 대화창이 떠있거나 포커스가 잡혀 있을까봐 일단 ESC 키를 눌러 해제함.
+  MouseMove, 100, 10, 5		;Aview 프로그램 타이틀바 제목 위치로 마우스 커서를 이동함.
+  ;윗행의 MouseMove에 이어 아래행 MouseClick을 하는 기작은 실은 MouseClick(좌표 지정) 한 행으로도 가능하나, 휴먼퍼셉션 및 디버그의 편의성을 위해 분리했음.
+  MouseClick,  left		;타이틀바를 한번 클릭하는 이유는, 메인메뉴 단축키를 확실하게 입력시키기 위한 안전장치임.
+  Send, !f			;메인메뉴의 단축키인 Alt+F를 눌러 File 항목을 띄움.
+  Sleep, 100			;0.1초 대기.
+  Send, a			;Save As 선택
+  Sleep, 500			;0.5초 대기.
+  Send, !d			;
+  Sleep, 100			;0.1초 대기.
+  Send, ^c			;
+  Sleep, 100			;0.1초 대기.
+  Send, {tab}{tab}{tab}{esc}		;
+  zsSavePath := clipboard
+
+  zsSavePath := zsSavePath . "\" . zsMaskFolderName	;"\Mask_DataSet"
+  if !FileExist(zsSavePath)
+  {
+MsgBox, make: %zsSavePath%
+    FileCreateDir, zsSavePath
+MsgBox, %ErrorLevel%
+  }
+  if !InStr(FileExist(zsSavePath), "D")
+  {
+    MsgBox, Path unavailable
+  }
+
   Return
 
 #9::	;Save to path 활용을 위한 핫키
-  if zsSavePath = ""
+  if !InStr(FileExist(zsSavePath), "D")
   {
-    MsgBox, No path, Set path firstly please.
+    MsgBox, Path unavailable
     Return
   }		;마스크콘트롤을 찾아봄. 없으면 종료.
   Sleep, 300

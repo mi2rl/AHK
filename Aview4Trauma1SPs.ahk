@@ -22,8 +22,8 @@ zsSavePath = ""
   Sleep, 100			;0.1초 대기. 시스템이 느린 경우 약간의 딜레이가 필요함.
   Send, g			;View메뉴 안에서 GuideLine을 토글하는 키는 "g"만 눌러도 실행되므로 g키를 침.
   ;아래 행의 ControlGetPos 마지막 두개의 인자는 AView 화면 내에 title label이 Mask Control인 child창의 위치를 찾기 위함. 사지탈 작업용.
-  ;ControlGetPos, zx, zy, zw, zh, Mask Control, ahk_exe AView2010.exe		; 사지탈 작업용.
-  MouseMove, zx+300, zy+300, 5	;찾아진 위치에서 적정 픽셀을 이동하여 주작업 편집창에 마우스를 이동함.
+  ControlGetPos, zx, zy, zw, zh, Mask Control, ahk_exe AView2010.exe		; 사지탈 작업용.
+  MouseMove, zx-300, zy+300, 5	;찾아진 위치에서 적정 픽셀을 이동하여 주작업 편집창에 마우스를 이동함.
   Click, right			;마우스 오른쪽 버튼을 클릭하여 콘텍스트메뉴를 띄움.
   Send, {down}{right}{enter}	;콘텍스트 메뉴의 첫번째(down키) 메뉴를 옆으로(right) 펼쳐서 나온 첫번째 메뉴인 Full screen을 실행(enter)함.
   Sleep, 500			;0.1초 대기. 시스템이 느린 경우 약간의 딜레이가 필요함.
@@ -65,9 +65,27 @@ zsSavePath = ""
   Sleep, 300
   Send, 10000{tab}	;UpperBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
   Sleep, 300
-;  Send, C-F{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
+  Send, C-F{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
+;  Send, P{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
 ;  Send, Th{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
-  Send, P{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
+  Sleep, 500
+  
+  MouseClick,  left
+  Sleep, 500
+  Send, 10000{tab}	;키보드입력 포커스가 가 있는 LowerBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
+  Sleep, 300
+  Send, 10000{tab}	;UpperBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
+  Sleep, 300
+  Send, T-F{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
+  Sleep, 500
+  
+  MouseClick,  left
+  Sleep, 500
+  Send, 10000{tab}	;키보드입력 포커스가 가 있는 LowerBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
+  Sleep, 300
+  Send, 10000{tab}	;UpperBound 입력란에 숫자 일만을 입력하고 tab키를 눌러 다음 입력칸으로 이동함.
+  Sleep, 300
+  Send, L-F{enter}	;마스크 이름 입력란에 적절한 이름을 입력하고 enter를 누르면 대화창이 닫히면서 마스크가 생성됨.
   Sleep, 500
   
   ControlGetPos, zx, zy, zw, zh, Mask Control, ahk_exe AView2010.exe

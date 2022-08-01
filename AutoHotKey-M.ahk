@@ -1,9 +1,10 @@
-;Global hot key settings for MIRL. ;ctrl=^, alt=!, shift=+
+;Global hot key settings for MIRL. ; ctrl=^, alt=!, shift=+, win=#, for example "ctrl + alt + v" definition(::) will start with "^!c::"
+SetTitleMatchMode, 2               ; SetTitleMatchMode arg meaning 1:start, 2:inside, 3:exact
 
 #s::
- ;Pause and show AHK menu. we can "reload" to reset AHK.
+ ;This code will show AHK itself's menu. Important cuz the script will be paused by this key, and we can "reload" to reset AHK.
   Menu, Tray, Show
-  ;Menu, Tray, Click, 3 ;Click 3rd menu
+  ;Menu, Tray, Click, 4 ;Click 4th menu (maybe "reload")
   Return
 
 #m::

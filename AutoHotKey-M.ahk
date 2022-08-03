@@ -1,4 +1,4 @@
-;Global hot key settings for MIRL. ; ctrl=^, alt=!, shift=+, win=#, for example "ctrl + alt + v" definition(::) will start with "^!c::"
+;Global hot key settings for MIRL. ; ctrl=^, alt=!, shift=+, win=#, for example "ctrl + alt + v" definition(::) will start with "^!v::"
 SetTitleMatchMode, 2               ; SetTitleMatchMode arg meaning 1:start, 2:inside, 3:exact
 
 #s::
@@ -11,6 +11,10 @@ SetTitleMatchMode, 2               ; SetTitleMatchMode arg meaning 1:start, 2:in
  ;To disable "global minimize key" and replace with "mouse click" on current position.
   Click
   Return
+
+{F1}::
+ ;To disable anoying help keys as F1 everywhere.
+  TrayTip, F1Disabler, "You pressed F1 in vain."
 
 MButton::
  ;Mouse middle button (wheel press) will be remapped as {Enter} key.

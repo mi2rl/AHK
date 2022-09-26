@@ -55,3 +55,42 @@ AHK는 동양어권 문자열 (CJK) 처리에 약한 면모가 있어서, 코드
 * ANSI 저장
 아직도 utf8 등 유니코드 인코딩이 지원되지 않습니다. 윈도우즈 연동 한계점이기도 하니, 코드에 되도록 한글을 쓰지 않아야 합니다.  
 한글이 포함된 텍스트 파일은 반드시 앤시 방식(ANSI) 인코딩으로 저장해야 문제없이 인식됩니다.  
+
+## 예제 AHK 스크립트  
+아래 내용을 텍스트 파일로 저장하면서 이름을 "ahktest.ahk"로 저장하면 사용이 가능합니다.  
+```
+;AHK test code; Send(key) guide: ctrl=^, alt=!, shift=+, winkey=#. ex: alt+win+z will be "!#z"
+SetTitleMatchMode, 2
+CoordMode, Mouse, Client
+;-------------------------------------------------------------------------------------------------
+#s::
+  Menu, Tray, Show
+  Return
+;-------------------------------------------------------------------------------------------------
+#c::
+ ;To disable "cotana" and replace with "mouse click" on current position.
+  Click ; calling "click" with no args will make a mouse click at current mouse cursor.
+  Return
+
+```
+스크립트 코드의 설명은 아래와 같습니다.  
+* ```;AHK test code; Send(key) guide: ctrl=^, alt=!, shift=+, winkey=#. ex: alt+win+z will be "!#z"```
+  * 세미콜론으로 시작되었으니 기계 입장에서 실행할 것이 없음. 사람 보기 위한 send 함수 사용법 요약.  
+* ```SetTitleMatchMode, 2```
+  * 자동화 작업에서 대상 윈도우 창을 찾을 때에, 일부 문자열만 지정해도 찾아지는 모드(2번)를 설정함.  
+* ```CoordMode, Mouse, Client```
+  * 마우스 포인터 관련 기능 실행할 때에 기준 범위를 "client" 모드로 설정.  
+* ```#s::```  
+  * 단축키를 앞에 쓰고 뒤에 콜론 두개를 쓴 "단축키 정의" 블록이 시작됨.  
+* ```Menu, Tray, Show```  
+  * 윈도우키와 s키 조합이 눌리면 "Menu"라는 함수가 실행되는데, 더이상 복잡한 대상이나 메뉴리소스가 없으므로 AHK 트레이 아이콘 자신을 대상으로, 메뉴를 show하는 기능만 실행되도록 하는 코드.  
+* ```Return```  
+  * 원하는 동작을 모두 했으므로 단축키 종료(return). 첫째 단축키 전의 블록이 끝났음.  
+* ```#c::```  
+  * 윈도우키와 c키 조합이 눌려졌을 때의 "단툭키 정의" 블록이 시작됨.  
+* ```;To disable "cotana" and replace with "mouse click" on current position.```  
+  * 해당 핫키의 의미 및 상황 등을 설명한 인간 문장 (주석)
+* ```Click ; calling "click" with no args will make a mouse click at current mouse cursor.```  
+  * 실행할 함수는 "Click"으로 단순히 끝. 뒤에 세미콜론 이후 문장을 사람을 위한 주석 문장.  
+* ```Return```  
+  * 원하는 동작을 모두 했으므로 단축키 종료(return). 첫째 단축키 전의 블록이 끝났음.  

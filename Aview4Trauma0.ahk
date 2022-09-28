@@ -1,184 +1,61 @@
-;AHK macro. Hot key settings for MIRL. ;ctrl=^, alt=!, shift=+
-;·¹ÀÌºí¸µ. °¡ÀÌµå¶óÀÎ ¾ø¾Ö°í Ç®½ºÅ©¸° ¸¸µå´Â ÇÖÅ°. ºó ¸¶½ºÅ© ·¹ÀÌ¾îµéÀ» "C-F, T-F, L-F" ÀÌ¸§À¸·Î »ı¼ºÇÏ´Â ÇÖÅ° µî.
-zx := 0 	;±Û·Î¹ú º¯¼ö ÃÊ±âÈ­. (ÇÏÁö¸¸ µüÈ÷ ÃÊ±âÈ­ÇÒ ÇÊ¿ä°¡ ¾ø±âµµ ÇÔ.)
-zy := 0
+;AHK hot key settings.    ; Send(key) guide: ctrl=^, alt=!, shift=+, winkey=#. ex: alt+win+z will be "!#z"
+igap1 := 100, igap2 := 400 ; Global variables for "delay gap" used on "Sleep func"
+SetTitleMatchMode, 2       ; SetTitleMatchMode arg means... 1:start, 2:inside, 3:exact
+CoordMode, Mouse, Client ; CoordMode arg means... full Screen, this Window, only Client ...
+;ê¸°ë³¸ ìœˆë„ìš°í‚¤+s ë‹¨ì¶•í‚¤ëŠ” Search ê´€ë ¨ ê¸°ëŠ¥ì´ë‚˜, AHKë¡œ ì•„ë˜ í•«í‚¤ ëŒ€ì²´.
+;-------------------------------------------------------------------------------------------------
+#s::
+;AHK ë§¤í¬ë¡œ ì§„í–‰ì„ ì ì‹œ ì¤‘ë‹¨í•˜ê³  AHK ì œì–´ ë©”ë‰´ë¥¼ ë„ìš°ëŠ” í‚¤. ë§¤í¬ë¡œ ë™ì‘ì´ ì˜ëª»ë˜ê³  ìˆê±°ë‚˜ ë§¤í¬ë¡œë¥¼ ìˆ˜ì •í•˜ì˜€ì„ ë•Œì— 
+;  ë³¸ í•«í‚¤ë¡œ Reloadë¥¼ ì„ íƒ (ì¦‰, "ìœˆí‚¤+s"ëˆ„ë¥¸ í›„ Rì„ëˆ„ë¦„). ì°¸ê³ : í•œê¸€ í¬í•¨ ahk ì†ŒìŠ¤ëŠ” í…ìŠ¤íŠ¸í˜•ì‹ì„ ANSIë¡œ ì €ì¥í•´ì•¼ í•¨.
+  Menu, Tray, Show
+ ;AHKëª…ë ¹ì–´ Menu TrayëŠ” ë³µì¡ë‹¤ì–‘í•˜ë‚˜, ìœ—í–‰ì²˜ëŸ¼ ì•„ë¬´ ì¸ìì—†ì´ showë¥¼ ë¶€ë¥´ë©´ AHK í•«í‚¤ ìŠ¤ìŠ¤ë¡œì˜ ë©”ë‰´ë¥¼ ë„ì›€.
+  Return
+;_-_- Please Edit from below. (for CJK double-byte, must save this text file as ANSI mode especially on MS-Windows.) -_-_
+
+;íŒŒì¼ ì„¤ëª…: AHK sample. v.0.98.
+
 zsThisAhkName := "Aview4Trauma"
-zsSavePath := ""
-zsMaskFolderName := "Mask_DataSet"
+;--------------------------------------------------------------------------------
+#IfWinActive, ahk_exe AView2010.exe ; ì´í•˜ í•«í‚¤ë“¤ì€ Aviewê°€ í¬ì»¤ìŠ¤ì¼ ë•Œì—ë§Œ ë™ì‘í•¨.
 
-#s::	;¿ø·¡ À©µµ¿ì ±â´É¿¡¼­, À©µµ¿ìÅ°¿Í s¸¦ ´©¸£¸é Search °ü·Ã ±â´ÉÀÏ ¼ö ÀÖÀ¸³ª, º» ÇÖÅ°·Î ´ëÃ¤ÇÏ°Ô µÊ.
- ;AHKÀÇ ¸ÅÅ©·Î¸¦ Àá½Ã Áß´ÜÇÏ°í AHKÁ¦¾î ¸Ş´º¸¦ ¶ç¿ò. ¸ÅÅ©·Î µ¿ÀÛÀÌ Àß¸øµÇ°í ÀÖ°Å³ª ¸ÅÅ©·Î¸¦ ¼öÁ¤ÇÏ¿´À» ¶§¿¡ ÁÖ·Î Reload¸¦ ¼±ÅÃÇÔ. (Áï, À©Å°+s´©¸¥ÈÄR´©¸£±â)
-  Menu, Tray, Show 	;AHK¸í·É¾î Menu Tray´Â º¹Àâ´Ù¾çÇÑ ±¸¼ºÀ¸·Î µ¿ÀÛÇÒ ¼ö ÀÖÀ¸³ª, ¾Æ¹« ÀÎÀÚ¾øÀÌ show¸¦ ºÎ¸£¸é AHK ÇÖÅ° ½º½º·ÎÀÇ ¸Ş´º¸¦ ¶ç¿ò.
+#1::	;ì›ë˜ ìœˆë„ìš° ê¸°ëŠ¥ì—ì„œ, ìœˆë„ìš°í‚¤ì™€ ìˆ«ì1ì„ ëˆ„ë¥´ë©´ TaskBar ì²«ì§¸ í•­ëª©ì„ í´ë¦­í•˜ëŠ” ê¸°ëŠ¥ì´ë‚˜, ë³¸ í•«í‚¤ë¡œ ëŒ€ì±„í•˜ê²Œ ë¨.
+ ;ë©”ë‰´ Viewì—ì„œ ê°€ì´ë“œë¼ì¸ ì—†ì•°, ì£¼ì‘ì—…ì°½ì„ Full, Presetì„ Bone, ì‘ì—…ìš© ë§ˆìŠ¤í¬ ì´ë¦„ì„ ìë™ ìƒì„±.
+  BlockInput, MouseMove		;í•«í‚¤ ë™ì‘ ì¤‘ì— ë§ˆìš°ìŠ¤ë¥¼ ì ê¸ˆ.
+  CoordMode, Mouse, Window 	;ë§ˆìš°ìŠ¤ ê´€ë ¨ ë™ì‘ì˜ ê¸°ì¤€ì ì„ Aview ì°½ ë‚´ë¶€ë¡œ ì„¤ì •.
+
+  WinActivate, AView		;Aviewì°½ì„ ìµœìƒë‹¨ìœ¼ë¡œ í™œì„±í™”.
+  Send, {esc}			;ë‹¤ë¥¸ ëŒ€í™”ì°½ì´ ë– ìˆê±°ë‚˜ í¬ì»¤ìŠ¤ê°€ ì¡í˜€ ìˆì„ê¹Œë´ ì¼ë‹¨ ESC í‚¤ë¥¼ ëˆŒëŸ¬ í•´ì œí•¨.
+  MouseMove, 100, 10, 5		;Aview í”„ë¡œê·¸ë¨ íƒ€ì´í‹€ë°” ì œëª© ìœ„ì¹˜ë¡œ ë§ˆìš°ìŠ¤ ì»¤ì„œë¥¼ ì´ë™í•¨.
+  ;ìœ—í–‰ì˜ MouseMoveì— ì´ì–´ ì•„ë˜í–‰ MouseClickì„ í•˜ëŠ” ê¸°ì‘ì€ ì‹¤ì€ MouseClick(ì¢Œí‘œ ì§€ì •) í•œ í–‰ìœ¼ë¡œë„ ê°€ëŠ¥í•˜ë‚˜, íœ´ë¨¼í¼ì…‰ì…˜ ë° ë””ë²„ê·¸ì˜ í¸ì˜ì„±ì„ ìœ„í•´ ë¶„ë¦¬í–ˆìŒ.
+  MouseClick,  left		;íƒ€ì´í‹€ë°”ë¥¼ í•œë²ˆ í´ë¦­í•˜ëŠ” ì´ìœ ëŠ”, ë©”ì¸ë©”ë‰´ ë‹¨ì¶•í‚¤ë¥¼ í™•ì‹¤í•˜ê²Œ ì…ë ¥ì‹œí‚¤ê¸° ìœ„í•œ ì•ˆì „ì¥ì¹˜ì„.
+  Send, !v			;ë©”ì¸ë©”ë‰´ì˜ ë‹¨ì¶•í‚¤ì¸ Alt+Vë¥¼ ëˆŒëŸ¬ View í•­ëª©ì„ ë„ì›€.
+  Sleep, 100			;0.1ì´ˆ ëŒ€ê¸°. ì‹œìŠ¤í…œì´ ëŠë¦° ê²½ìš° ì•½ê°„ì˜ ë”œë ˆì´ê°€ í•„ìš”í•¨.
+  Send, g			;Viewë©”ë‰´ ì•ˆì—ì„œ GuideLineì„ í† ê¸€í•˜ëŠ” í‚¤ëŠ” "g"ë§Œ ëˆŒëŸ¬ë„ ì‹¤í–‰ë˜ë¯€ë¡œ gí‚¤ë¥¼ ì¹¨.
+
+  WinGetPos, zx, zy, zw, zh, AView	;ì£¼ì‘ì—…ì°½ì˜ ìœ„ì¹˜ë¥¼ ì°¾ìŒ.
+  if (zx = "")			;ì•ˆì°¾ì•„ì§€ë©´ ì¢…ë£Œ.
+  {
+    BlockInput, MouseMoveOff	;ì¢…ë£Œì „ ë§ˆìš°ìŠ¤ ì ê¸ˆ í’€ê¸°.
+    Return
+  }
+  zx := (zw/2)			;ì£¼ì‘ì—…ì°½ ë‚´ë¶€ í´ë¦­ì„ ìœ„í•´ ê°€ìš´ë° ìœ„ì¹˜ë¥¼ ì¶”ì‚°í•¨.
+  ;ì•„ë˜ í–‰ì˜ ControlGetPosëŠ” Mask Controlì˜ ìœ„ì¹˜ë¥¼ ì°¾ê¸° ìœ„í•¨. ì‚¬ì§€íƒˆ ì‘ì—…ìš©. ì‚¬ì§€íƒˆ ì´ì™¸ ì‘ì—…ì AHKì—ì„œëŠ” commentoutí• ê²ƒ.
+  ControlGetPos, zx, zy, zw, zh, Mask Control, AView	;ìš°ì¸¡ ë§ˆìŠ¤í¬ì½˜íŠ¸ë¡¤ ìœ„ì¹˜ë¥¼ ì°¾ìŒ.
+  if (zx = "")			;ì•ˆì°¾ì•„ì§€ë©´ ì¢…ë£Œ.
+  {
+    BlockInput, MouseMoveOff	;ì¢…ë£Œì „ ë§ˆìš°ìŠ¤ ì ê¸ˆ í’€ê¸°.
+    Return
+  }
+  MouseMove, zx-300, zy+300, 5	;ì°¾ì•„ì§„ ìœ„ì¹˜ì—ì„œ ì ì • í”½ì…€ ì¢Œì¸¡í•˜ë‹¨ ì´ë™í•˜ì—¬ ì£¼ì‘ì—… í¸ì§‘ì°½ì— ë§ˆìš°ìŠ¤ë¥¼ ì´ë™í•¨.
+  Click, right			;ë§ˆìš°ìŠ¤ ì˜¤ë¥¸ìª½ ë²„íŠ¼ì„ í´ë¦­í•˜ì—¬ ì½˜í…ìŠ¤íŠ¸ë©”ë‰´ë¥¼ ë„ì›€.
+  Send, {down}{right}{enter}	;ì½˜í…ìŠ¤íŠ¸ ë©”ë‰´ì˜ ì²«ë²ˆì§¸(downí‚¤) ë©”ë‰´ë¥¼ ì˜†ìœ¼ë¡œ(right) í¼ì³ì„œ ë‚˜ì˜¨ ì²«ë²ˆì§¸ ë©”ë‰´ì¸ Full screenì„ ì‹¤í–‰(enter)í•¨.
+  BlockInput, MouseMoveOff	;ì¢…ë£Œì „ ë§ˆìš°ìŠ¤ ì ê¸ˆ í’€ê¸°.
   Return
 
-#IfWinActive, ahk_exe AView2010.exe ; ÀÌÇÏ ÇÖÅ°µéÀº Aview°¡ Æ÷Ä¿½ºÀÏ ¶§¿¡¸¸ µ¿ÀÛÇÔ.
-
-#1::	;¿ø·¡ À©µµ¿ì ±â´É¿¡¼­, À©µµ¿ìÅ°¿Í ¼ıÀÚ1À» ´©¸£¸é TaskBar Ã¹Â° Ç×¸ñÀ» Å¬¸¯ÇÏ´Â ±â´ÉÀÌ³ª, º» ÇÖÅ°·Î ´ëÃ¤ÇÏ°Ô µÊ.
- ;¸Ş´º View¿¡¼­ °¡ÀÌµå¶óÀÎ ¾ø¾Ú, ÁÖÀÛ¾÷Ã¢À» Full, PresetÀ» Bone, ÀÛ¾÷¿ë ¸¶½ºÅ© ÀÌ¸§À» ÀÚµ¿ »ı¼º.
-  BlockInput, MouseMove		;ÇÖÅ° µ¿ÀÛ Áß¿¡ ¸¶¿ì½º¸¦ Àá±İ.
-  CoordMode, Mouse, Window 	;¸¶¿ì½º °ü·Ã µ¿ÀÛÀÇ ±âÁØÁ¡À» Aview Ã¢ ³»ºÎ·Î ¼³Á¤.
-
-  WinActivate, AView		;AviewÃ¢À» ÃÖ»ó´ÜÀ¸·Î È°¼ºÈ­.
-  Send, {esc}			;´Ù¸¥ ´ëÈ­Ã¢ÀÌ ¶°ÀÖ°Å³ª Æ÷Ä¿½º°¡ ÀâÇô ÀÖÀ»±îºÁ ÀÏ´Ü ESC Å°¸¦ ´­·¯ ÇØÁ¦ÇÔ.
-  MouseMove, 100, 10, 5		;Aview ÇÁ·Î±×·¥ Å¸ÀÌÆ²¹Ù Á¦¸ñ À§Ä¡·Î ¸¶¿ì½º Ä¿¼­¸¦ ÀÌµ¿ÇÔ.
-  ;À­ÇàÀÇ MouseMove¿¡ ÀÌ¾î ¾Æ·¡Çà MouseClickÀ» ÇÏ´Â ±âÀÛÀº ½ÇÀº MouseClick(ÁÂÇ¥ ÁöÁ¤) ÇÑ ÇàÀ¸·Îµµ °¡´ÉÇÏ³ª, ÈŞ¸ÕÆÛ¼Á¼Ç ¹× µğ¹ö±×ÀÇ ÆíÀÇ¼ºÀ» À§ÇØ ºĞ¸®ÇßÀ½.
-  MouseClick,  left		;Å¸ÀÌÆ²¹Ù¸¦ ÇÑ¹ø Å¬¸¯ÇÏ´Â ÀÌÀ¯´Â, ¸ŞÀÎ¸Ş´º ´ÜÃàÅ°¸¦ È®½ÇÇÏ°Ô ÀÔ·Â½ÃÅ°±â À§ÇÑ ¾ÈÀüÀåÄ¡ÀÓ.
-  Send, !v			;¸ŞÀÎ¸Ş´ºÀÇ ´ÜÃàÅ°ÀÎ Alt+V¸¦ ´­·¯ View Ç×¸ñÀ» ¶ç¿ò.
-  Sleep, 100			;0.1ÃÊ ´ë±â. ½Ã½ºÅÛÀÌ ´À¸° °æ¿ì ¾à°£ÀÇ µô·¹ÀÌ°¡ ÇÊ¿äÇÔ.
-  Send, g			;View¸Ş´º ¾È¿¡¼­ GuideLineÀ» Åä±ÛÇÏ´Â Å°´Â "g"¸¸ ´­·¯µµ ½ÇÇàµÇ¹Ç·Î gÅ°¸¦ Ä§.
-
-  WinGetPos, zx, zy, zw, zh, AView	;ÁÖÀÛ¾÷Ã¢ÀÇ À§Ä¡¸¦ Ã£À½.
-  if (zx = "")			;¾ÈÃ£¾ÆÁö¸é Á¾·á.
-  {
-    BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-    Return
-  }
-  zx := (zw/2)			;ÁÖÀÛ¾÷Ã¢ ³»ºÎ Å¬¸¯À» À§ÇØ °¡¿îµ¥ À§Ä¡¸¦ Ãß»êÇÔ.
-  ;¾Æ·¡ ÇàÀÇ ControlGetPos´Â Mask ControlÀÇ À§Ä¡¸¦ Ã£±â À§ÇÔ. »çÁöÅ» ÀÛ¾÷¿ë. »çÁöÅ» ÀÌ¿Ü ÀÛ¾÷ÀÚ AHK¿¡¼­´Â commentoutÇÒ°Í.
-  ControlGetPos, zx, zy, zw, zh, Mask Control, AView	;¿ìÃø ¸¶½ºÅ©ÄÜÆ®·Ñ À§Ä¡¸¦ Ã£À½.
-  if (zx = "")			;¾ÈÃ£¾ÆÁö¸é Á¾·á.
-  {
-    BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-    Return
-  }
-  MouseMove, zx-300, zy+300, 5	;Ã£¾ÆÁø À§Ä¡¿¡¼­ ÀûÁ¤ ÇÈ¼¿ ÁÂÃøÇÏ´Ü ÀÌµ¿ÇÏ¿© ÁÖÀÛ¾÷ ÆíÁıÃ¢¿¡ ¸¶¿ì½º¸¦ ÀÌµ¿ÇÔ.
-  Click, right			;¸¶¿ì½º ¿À¸¥ÂÊ ¹öÆ°À» Å¬¸¯ÇÏ¿© ÄÜÅØ½ºÆ®¸Ş´º¸¦ ¶ç¿ò.
-  Send, {down}{right}{enter}	;ÄÜÅØ½ºÆ® ¸Ş´ºÀÇ Ã¹¹øÂ°(downÅ°) ¸Ş´º¸¦ ¿·À¸·Î(right) ÆîÃÄ¼­ ³ª¿Â Ã¹¹øÂ° ¸Ş´ºÀÎ Full screenÀ» ½ÇÇà(enter)ÇÔ.
-  BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-  Return
-
-#2::
-  BlockInput, MouseMove		;ÇÖÅ° µ¿ÀÛ Áß¿¡ ¸¶¿ì½º¸¦ Àá±İ.
-  SetTitleMatchMode, 1		;WinGetPos ·Î Ã£À» ¶§¿¡ ½ÃÀÛ ¹®ÀÚ¿­ Æ÷ÇÔ ¹æ½Ä.
-  CoordMode, Mouse, Window 	;¸¶¿ì½º °ü·Ã µ¿ÀÛÀÇ ±âÁØÁ¡À» Aview Ã¢ ³»ºÎ·Î ¼³Á¤.
-  Send, {esc}			;´Ù¸¥ ´ëÈ­Ã¢ÀÌ ¶°ÀÖ°Å³ª Æ÷Ä¿½º°¡ ÀâÇô ÀÖÀ»±îºÁ ÀÏ´Ü ESC Å°¸¦ ´­·¯ ÇØÁ¦ÇÔ.
-  WinGetPos, zx, zy, zw, zh, AView	;Aview ÇÁ·Î±×·¥ Ã¢ÀÇ À§Ä¡¸¦ Ã£¾Æ³¿.
-  if (zx = "")			;¾ÈÃ£¾ÆÁö¸é Á¾·á.
-  {
-    BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-    Return
-  }
-;msgbox,1:%zx%,%zy%,%zw%,%zh%
-  zx := (zw/2)			;ÁÖÀÛ¾÷Ã¢ À§Ä¡¸¦ Ãß»êÇÏ±â À§ÇØ Ã¢ Å©±âÀÇ Àı¹İÀ» °è»êÇÔ.
-  MouseMove, zx-300, zy+300, 5	;ÀûÁ¤ ÇÈ¼¿À» ÀÌµ¿ÇÏ¿© ÁÖÀÛ¾÷ ÆíÁıÃ¢¿¡ ¸¶¿ì½º¸¦ ÀÌµ¿ÇÔ.
-  Click, right			;¸¶¿ì½º ¿À¸¥ÂÊ ¹öÆ°À» Å¬¸¯ÇÏ¿© ÄÜÅØ½ºÆ®¸Ş´º¸¦ ¶ç¿ò.
-  Sleep, 100			;0.1ÃÊ ´ë±â. ½Ã½ºÅÛÀÌ ´À¸° °æ¿ì ¾à°£ÀÇ µô·¹ÀÌ°¡ ÇÊ¿äÇÔ.
-  Send, {up}{up}{up}{right}	;ÄÜÅØ½ºÆ® ¸Ş´º¿¡¼­ preset
-  Sleep, 100			;0.1ÃÊ ´ë±â. ½Ã½ºÅÛÀÌ ´À¸° °æ¿ì ¾à°£ÀÇ µô·¹ÀÌ°¡ ÇÊ¿äÇÔ.
-  Send, {up}{up}{enter}		;ÄÜÅØ½ºÆ® ¸Ş´º¿¡¼­ bone
-
-  ControlGetPos, zx, zy, zw, zh, Mask Control, AView
-  if (zx = "")			;¸¶½ºÅ©ÄÜÆ®·ÑÀ» Ã£À½. ¾øÀ¸¸é Á¾·á.
-  {
-    MsgBox, Can't find mask control window.
-    BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-    Return
-  }
-  MouseMove, zx+10, zy+10, 5	;Ã£¾ÆÁø ¸¶½ºÅ©ÄÜÆ®·ÑÀÇ »Ñ¸®À§Ä¡(ÁÂ»ó´Ü ÄÚ³Ê)¿¡¼­ 10 ÇÈ¼¿¾¿ ¿ìÃøÇÏ´ÜÀ» ³ë·Á Å¬¸¯ÇÏ±â À§ÇØ ÀÌµ¿ÇÔ.
-  MouseClick,  left		;Å¬¸¯ÇÏ¿© Æ÷Ä¿½º¸¦ ÁÜ
-
-  WinGetClass, zClass, A	;È°¼ºÈ­µÈ À©µµ¿ìÀÇ Å¬·¡½º¸íÀ» ¾Ë¾Æ³¿.
-  MouseGetPos, zx, zy, zWin, zControl, 1	;¸¶¿ì½º À§Ä¡ÀÇ ÄÜÆ®·ÑÀ» ¾Ë¾Æ³¿.
-  ControlGetText, zText, %zControl%, ahk_class %zClass%	;ÄÜÆ®·ÑÀÇ ÀÌ¸§À» ¾Ë¾Æ³¿.
-  if (zText <> "Mask Control")	;Mask controlÀÌ ÃÖ»ó ÄÜÆ®·ÑÀÌ ¾Æ´Ï¸é Á¾·á
-  {
-    MsgBox, Can't find mask control window.
-    BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-    Return
-  }
-  ;¾Æ·¡ ÇàÀÇ ControlGetPos ¸¶Áö¸· µÎ°³ÀÇ ÀÎÀÚ´Â AView È­¸é ³»¿¡ title labelÀÌ &(¾ÚÆÛ¼¾µå¿¡ ÀÇÇØ ¹ØÁÙÀÌ ºÙÀ½)CreateÀÎ ¹öÆ°ÀÇ À§Ä¡¸¦ Ã£±â À§ÇÔ.
-  ControlGetPos, zx, zy, zw, zh, &Create, AView
-  if (zx = "")			;¾ÈÃ£¾ÆÁö¸é Á¾·á.
-  {
-    BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-    Return
-  }
-  MouseMove, zx+10, zy+10, 5	;Ã£¾ÆÁø Create ºñÆ° »Ñ¸®À§Ä¡(ÁÂ»ó´Ü ÄÚ³Ê)¿¡¼­ 10 ÇÈ¼¿¾¿ ¿ìÃøÇÏ´ÜÀ» ³ë·Á Å¬¸¯ÇÏ±â À§ÇØ ÀÌµ¿ÇÔ.
-  MouseClick,  left		;¹öÆ°À» ´©¸§. (À§¿¡ ¸»ÇßµíÀÌ, MouseClick(ÁÂÇ¥) 1ÇàÀ¸·Î ÇØ°á °¡´ÉÇÏ³ª, ¾î¶² ÆíÀÇ¼ºÀ» À§ÇØ 2ÇàÀ¸·Î ÄÚµùÇÔ.)
-  Sleep, 500			;¸¶½ºÅ©¸¦ »ı¼ºÇÏ´Â ´ëÈ­Ã¢ÀÌ ¶ß±â¸¦ Àá½Ã ±â´Ù·Á ÁÜ.
-  Send, 10000{tab}	;Å°º¸µåÀÔ·Â Æ÷Ä¿½º°¡ °¡ ÀÖ´Â LowerBound ÀÔ·Â¶õ¿¡ ¼ıÀÚ ÀÏ¸¸À» ÀÔ·ÂÇÏ°í tabÅ°¸¦ ´­·¯ ´ÙÀ½ ÀÔ·ÂÄ­À¸·Î ÀÌµ¿ÇÔ.
-  Sleep, 300
-  Send, 10000{tab}	;UpperBound ÀÔ·Â¶õ¿¡ ¼ıÀÚ ÀÏ¸¸À» ÀÔ·ÂÇÏ°í tabÅ°¸¦ ´­·¯ ´ÙÀ½ ÀÔ·ÂÄ­À¸·Î ÀÌµ¿ÇÔ.
-  Sleep, 300
-  Send, C-F{enter}	;¸¶½ºÅ© ÀÌ¸§ ÀÔ·Â¶õ¿¡ ÀûÀıÇÑ ÀÌ¸§À» ÀÔ·ÂÇÏ°í enter¸¦ ´©¸£¸é ´ëÈ­Ã¢ÀÌ ´İÈ÷¸é¼­ ¸¶½ºÅ©°¡ »ı¼ºµÊ.
-;  Send, Th{enter}	;¸¶½ºÅ© ÀÌ¸§ ÀÔ·Â¶õ¿¡ ÀûÀıÇÑ ÀÌ¸§À» ÀÔ·ÂÇÏ°í enter¸¦ ´©¸£¸é ´ëÈ­Ã¢ÀÌ ´İÈ÷¸é¼­ ¸¶½ºÅ©°¡ »ı¼ºµÊ.
-;  Send, P{enter}	;¸¶½ºÅ© ÀÌ¸§ ÀÔ·Â¶õ¿¡ ÀûÀıÇÑ ÀÌ¸§À» ÀÔ·ÂÇÏ°í enter¸¦ ´©¸£¸é ´ëÈ­Ã¢ÀÌ ´İÈ÷¸é¼­ ¸¶½ºÅ©°¡ »ı¼ºµÊ.
-  Sleep, 500
-  
-  MouseClick,  left
-  Sleep, 500
-  Send, 10000{tab}	;Å°º¸µåÀÔ·Â Æ÷Ä¿½º°¡ °¡ ÀÖ´Â LowerBound ÀÔ·Â¶õ¿¡ ¼ıÀÚ ÀÏ¸¸À» ÀÔ·ÂÇÏ°í tabÅ°¸¦ ´­·¯ ´ÙÀ½ ÀÔ·ÂÄ­À¸·Î ÀÌµ¿ÇÔ.
-  Sleep, 300
-  Send, 10000{tab}	;UpperBound ÀÔ·Â¶õ¿¡ ¼ıÀÚ ÀÏ¸¸À» ÀÔ·ÂÇÏ°í tabÅ°¸¦ ´­·¯ ´ÙÀ½ ÀÔ·ÂÄ­À¸·Î ÀÌµ¿ÇÔ.
-  Sleep, 300
-  Send, T-F{enter}	;¸¶½ºÅ© ÀÌ¸§ ÀÔ·Â¶õ¿¡ ÀûÀıÇÑ ÀÌ¸§À» ÀÔ·ÂÇÏ°í enter¸¦ ´©¸£¸é ´ëÈ­Ã¢ÀÌ ´İÈ÷¸é¼­ ¸¶½ºÅ©°¡ »ı¼ºµÊ.
-  Sleep, 500
-  
-  MouseClick,  left
-  Sleep, 500
-  Send, 10000{tab}	;Å°º¸µåÀÔ·Â Æ÷Ä¿½º°¡ °¡ ÀÖ´Â LowerBound ÀÔ·Â¶õ¿¡ ¼ıÀÚ ÀÏ¸¸À» ÀÔ·ÂÇÏ°í tabÅ°¸¦ ´­·¯ ´ÙÀ½ ÀÔ·ÂÄ­À¸·Î ÀÌµ¿ÇÔ.
-  Sleep, 300
-  Send, 10000{tab}	;UpperBound ÀÔ·Â¶õ¿¡ ¼ıÀÚ ÀÏ¸¸À» ÀÔ·ÂÇÏ°í tabÅ°¸¦ ´­·¯ ´ÙÀ½ ÀÔ·ÂÄ­À¸·Î ÀÌµ¿ÇÔ.
-  Sleep, 300
-  Send, L-F{enter}	;¸¶½ºÅ© ÀÌ¸§ ÀÔ·Â¶õ¿¡ ÀûÀıÇÑ ÀÌ¸§À» ÀÔ·ÂÇÏ°í enter¸¦ ´©¸£¸é ´ëÈ­Ã¢ÀÌ ´İÈ÷¸é¼­ ¸¶½ºÅ©°¡ »ı¼ºµÊ.
-  Sleep, 500
-  
-  ControlGetPos, zx, zy, zw, zh, Mask Control, AView
-  MouseClick,  left, zx+40, zy+75	;ÇÊ¿äÇÑ ¸¶½ºÅ©¸¦ ¸¸µé¾úÀ¸´Ï, MaskControl À§Ä¡¿¡¼­ ¸®½ºÆ® Áß Ã¹¹øÂ° ¸¶½ºÅ©¸¦ Å¬¸¯ÇÏ¿© ¼±ÅÃÇÔ.
-  BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-  Return
-
-!0::	;Save to path ¼³Á¤À» À§ÇÑ ÇÖÅ°
- ;Save to current path ±â´ÉÀ» ahk·Î ±¸¼ºÇØº½
-  ;InputBox, zsSavePath, Path setting, Enter save path
-  CoordMode, Mouse, Window 	;¸¶¿ì½º °ü·Ã µ¿ÀÛÀÇ ±âÁØÁ¡À» Aview Ã¢ ³»ºÎ·Î ¼³Á¤.
-  Send, {esc}			;´Ù¸¥ ´ëÈ­Ã¢ÀÌ ¶°ÀÖ°Å³ª Æ÷Ä¿½º°¡ ÀâÇô ÀÖÀ»±îºÁ ÀÏ´Ü ESC Å°¸¦ ´­·¯ ÇØÁ¦ÇÔ.
-  MouseMove, 100, 10, 5		;Aview ÇÁ·Î±×·¥ Å¸ÀÌÆ²¹Ù Á¦¸ñ À§Ä¡·Î ¸¶¿ì½º Ä¿¼­¸¦ ÀÌµ¿ÇÔ.
-  ;À­ÇàÀÇ MouseMove¿¡ ÀÌ¾î ¾Æ·¡Çà MouseClickÀ» ÇÏ´Â ±âÀÛÀº ½ÇÀº MouseClick(ÁÂÇ¥ ÁöÁ¤) ÇÑ ÇàÀ¸·Îµµ °¡´ÉÇÏ³ª, ÈŞ¸ÕÆÛ¼Á¼Ç ¹× µğ¹ö±×ÀÇ ÆíÀÇ¼ºÀ» À§ÇØ ºĞ¸®ÇßÀ½.
-  MouseClick,  left		;Å¸ÀÌÆ²¹Ù¸¦ ÇÑ¹ø Å¬¸¯ÇÏ´Â ÀÌÀ¯´Â, ¸ŞÀÎ¸Ş´º ´ÜÃàÅ°¸¦ È®½ÇÇÏ°Ô ÀÔ·Â½ÃÅ°±â À§ÇÑ ¾ÈÀüÀåÄ¡ÀÓ.
-  Send, !f			;¸ŞÀÎ¸Ş´ºÀÇ ´ÜÃàÅ°ÀÎ Alt+F¸¦ ´­·¯ File Ç×¸ñÀ» ¶ç¿ò.
-  Sleep, 100			;0.1ÃÊ ´ë±â.
-  Send, l			;load ¼±ÅÃ
-  Sleep, 500			;0.5ÃÊ ´ë±â.
-  Send, {esc}			;
-  Sleep, 100			;0.1ÃÊ ´ë±â.
-  Send, ^c			;
-  zsSavePath := clipboard
-
-  zsSavePath := zsSavePath . "\" . zsMaskFolderName	;"\Mask_DataSet"
-  if !FileExist(zsSavePath)
-  {
-MsgBox, make: %zsSavePath%
-    FileCreateDir, zsSavePath
-MsgBox, %ErrorLevel%
-  }
-  if !InStr(FileExist(zsSavePath), "D")
-  {
-    MsgBox, Path unavailable
-  }
-
-  BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-  Return
-
-!9::	;Save to path È°¿ëÀ» À§ÇÑ ÇÖÅ°
-  if !InStr(FileExist(zsSavePath), "D")
-  {
-    MsgBox, Path unavailable
-    Return
-  }		;¸¶½ºÅ©ÄÜÆ®·ÑÀ» Ã£¾Æº½. ¾øÀ¸¸é Á¾·á.
-  Sleep, 300
-  Send, !d
-  Sleep, 300
-  Send, %zsSavePath%{enter}
-  Sleep, 300
-  Send, {tab}{tab}{tab}!n
-  BlockInput, MouseMoveOff	;Á¾·áÀü ¸¶¿ì½º Àá±İ Ç®±â.
-  Return
-
-#IfWinActive ; ÀÌÇÏ ÇÖÅ°µéÀº AView»Ó¸¸ ¾Æ´Ï¶ó À©µµ¿ì Àü¿ª¿¡¼­ µ¿ÀÛÇÔ.
+#IfWinActive ; ì´í•˜ í•«í‚¤ë“¤ì€ AViewë¿ë§Œ ì•„ë‹ˆë¼ ìœˆë„ìš° ì „ì—­ì—ì„œ ë™ì‘í•¨.
 
 
-#m::
- ;To disable "global minimize key" and replace with "mouse click" on current position.
+#c::
+ ;To disable win10 "cotana" hotkey, and replace with "mouse click" on current position.
   Click
   Return

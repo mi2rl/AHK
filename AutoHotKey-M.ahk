@@ -1,4 +1,4 @@
-;Global hot key settings for MIRL. ; ctrl=^, alt=!, shift=+, win=#, for example "ctrl + alt + v" definition(::) will start with "^!v::"
+;AHK hot key settings for example. ; ctrl=^, alt=!, shift=+, win=#, for example "ctrl + alt + v" definition(::) will start with "^!v::"
 SetTitleMatchMode, 2               ; SetTitleMatchMode arg meaning 1:start, 2:inside, 3:exact
 
 #s::
@@ -7,8 +7,8 @@ SetTitleMatchMode, 2               ; SetTitleMatchMode arg meaning 1:start, 2:in
   ;Menu, Tray, Click, 4 ;Click 4th menu (maybe "reload")
   Return
 
-#m::
- ;To disable "global minimize key" and replace with "mouse click" on current position.
+#c::
+ ;To disable win10 "cotana" hotkey and replace with "mouse click" on current position.
   Click
   Return
 
@@ -39,9 +39,11 @@ MButton::
   mouspeed1 = 10 ;fast
   mouspeed2 = 30 ;slow
   WinActivate, Chrome
+ BlockInput, MouseMove
   MouseClick, left,   80, 280, 1, mouspeed1 		;click
   Sleep, 1000
   MouseClickDrag, left, 100, 200, 500, 600, mouspeed1 	;drag
+ BlockInput, MouseMoveOff
   Return
 
 #4::

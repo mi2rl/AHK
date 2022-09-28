@@ -71,6 +71,7 @@ CoordMode, Mouse, Client
 #c::
  ;To disable "cotana" and replace with "mouse click" on current position.
   Click ; calling "click" with no args will make a mouse click at current mouse cursor.
+  TrayTip, AHK example, "Mouse click sent!"
   Return
 
 ```
@@ -86,15 +87,17 @@ CoordMode, Mouse, Client
 * ```Menu, Tray, Show```  
   * 윈도우키와 s키 조합이 눌리면 "Menu"라는 함수가 실행되는데, 더이상 복잡한 대상이나 메뉴리소스가 없으므로 AHK 트레이 아이콘 자신을 대상으로, 메뉴를 show하는 기능만 실행되도록 하는 코드.  
 * ```Return```  
-  * 원하는 동작을 모두 했으므로 단축키 종료(return). 첫째 단축키 전의 블록이 끝났음.  
+  * 원하는 동작을 모두 했으므로 단축키 종료(return). 첫째 단축키 정의 블록이 끝났음.  
 * ```#c::```  
   * 윈도우키와 c키 조합이 눌려졌을 때의 "단툭키 정의" 블록이 시작됨.  
 * ```;To disable "cotana" and replace with "mouse click" on current position.```  
   * 해당 핫키의 의미 및 상황 등을 설명한 인간 문장 (주석)
 * ```Click ; calling "click" with no args will make a mouse click at current mouse cursor.```  
   * 실행할 함수는 "Click"으로 단순히 끝. 뒤에 세미콜론 이후 문장을 사람을 위한 주석 문장.  
+* ```TrayTip, AHK example, "Mouse click sent!"```
+  * 윈도우 툴팁(트레이 쪽 토스트 메시지)으로 마우스 클릭이 눌렸다는 메시지를 출력함.  
 * ```Return```  
-  * 원하는 동작을 모두 했으므로 단축키 종료(return). 첫째 단축키 전의 블록이 끝났음.  
+  * 원하는 동작을 모두 했으므로 단축키 종료(return). 둘째 단축키 정의 블록이 끝났음.  
 
 위 스크립트를 실행하여 트레이에 녹색H 아이콘이 떠있다면, 두가지 핫키가 등록되어 사용 가능하게 됩니다.  
 윈도우키와 s를 누르면 ahk 설정 메뉴가 뜨게 됩니다. 윈도우키와 c를 누르면 현재 마우스 커서 자리에 그대로 "클릭"을 한 효과가 납니다. (마우스에 손을 대지 않고 키보드만으로 클릭을 하는 핫키)  
